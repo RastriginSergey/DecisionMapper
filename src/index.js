@@ -25,7 +25,7 @@ const render = () => {
                 <App />
             </Provider>
         </AppContainer>,
-        document.getElementById('root')
+        document.body
     );
 };
 
@@ -33,7 +33,7 @@ render();
 
 // Hot Module Replacement API
 if (module.hot) {
-    module.hot.accept('./components/app', () => {
+    module.hot.accept('./index', () => {
         render()
     });
 }

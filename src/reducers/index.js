@@ -15,10 +15,10 @@ function auth(state = {}, action) {
     }
 }
 
-function pokemons(state = [], action) {
+function pokemons(state = {}, action) {
     switch (action.type) {
         case POKEMON_TYPES.FETCH_POKEMONS:
-            return [...action.pokemons];
+            return Object.assign({}, state, {list: action.payload.list, count: action.payload.count});
         default:
             return state;
     }

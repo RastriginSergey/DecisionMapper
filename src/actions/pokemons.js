@@ -18,8 +18,9 @@ export const fetchPokemons = (page = 1, limit = 3, offset = 0) => (dispatch, get
     };
     fetch(`${config.serverURL}/api/v1/pokemons?limit=${limit}&offset=${offset}`, options)
         .then(response => response.json())
-        .then(result => {
-            dispatch({type: POKEMON_TYPES.FETCH_POKEMONS, pokemons: result});
+        .then(parsed => {
+            console.log(parsed)
+            dispatch({type: POKEMON_TYPES.FETCH_POKEMONS, payload: {list: parsed.result, count: parsed.count}});
             dispatch({type: POKEMON_TYPES.END_FETCHING})
         })
 };

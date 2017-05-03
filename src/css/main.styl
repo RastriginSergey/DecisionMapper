@@ -4,10 +4,11 @@ html, body, #root
 
 .grid
   display: grid
+  height: 100%
   grid-template-columns: repeat(3, 1fr)
   grid-gap: 10px
   grid-template-rows: 80px auto 80px
-  grid-template-areas: "header header header header""main main main main""footer footer footer footer";
+  grid-template-areas: "header header header""main main main""footer footer footer";
 
 header
   grid-area header
@@ -42,8 +43,6 @@ header
 
 .Pokemons-filter
   margin-bottom: 10px
-
-
 
 .Pokemon-stats td
   border 1px solid black

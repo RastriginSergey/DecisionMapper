@@ -6,9 +6,7 @@ const Spinner = (props) => {
     console.log(isFetching);
 
     return (
-        <div>
-            <div className={`spinner ${isFetching ? '' : 'hidden'}`} />
-        </div>
+        <div className={`spinner ${isFetching ? '' : 'hidden'}`} />
     )
 };
 

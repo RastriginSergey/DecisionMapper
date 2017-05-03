@@ -20,7 +20,7 @@ module.exports = {
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'build'),
-        publicPath: "/list"
+        publicPath: "/"
     },
 
     devServer: {
@@ -29,9 +29,6 @@ module.exports = {
         contentBase: path.resolve(__dirname, 'build'),
         // match the output path
     },
-
-    watch: true,
-
 
     module: {
         rules: [

@@ -8,7 +8,7 @@ class Pokemons extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            pokemons: this.props.pokemons,
+            pokemons: [],
             searchText: '',
             tags: ''
         };
@@ -17,7 +17,7 @@ class Pokemons extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({pokemons: nextProps.pokemons})
+        this.setState({pokemons: nextProps.pokemons.list})
     }
 
     onInputChange(e) {
@@ -26,9 +26,7 @@ class Pokemons extends Component {
 
     componentWillMount() {
         const page = parseInt(this.props.match.params.page) || 1;
-        // if (!this.props.pokemons.length) {
-            this.props.fetchPokemons(page);
-        // }
+        this.props.fetchPokemons(page);
     }
 
     render() {
