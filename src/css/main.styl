@@ -1,0 +1,96 @@
+html, body, #root
+  height: 100%
+  margin: 0
+
+.grid
+  display: grid
+  grid-template-columns: repeat(3, 1fr)
+  grid-gap: 10px
+  grid-template-rows: 80px auto 80px
+  grid-template-areas: "header header header header""main main main main""footer footer footer footer";
+
+header
+  grid-area header
+  background #6565ff
+  align-items: center
+  display: flex
+  padding: 1rem
+  & .nav-link
+    font-size: 24px;
+    margin-right: 2rem
+    color: white
+    text-decoration: none
+
+.main
+  grid-area main
+
+.Pokemons-container
+  display: flex
+  justify-content space-around
+
+.Pokemon
+  width: 30%
+  border 1px solid #b6aeb5
+  padding: 10px;
+
+.Pokemon-header
+  display: flex;
+  justify-content center
+
+.Pokemon-stats
+  width: 100%
+
+.Pokemons-filter
+  margin-bottom: 10px
+
+
+
+.Pokemon-stats td
+  border 1px solid black
+
+
+
+footer
+  grid-area footer
+  background-color: #6565ff;
+
+.content
+  margin-top: 4.5rem;
+
+.pokemon-wrapper
+  border 1px solid #b6aeb5
+
+.search-input
+  margin-bottom:1rem;
+
+.badge
+  margin-right:0.2rem;
+
+.card-img
+  width: 96px
+  height: 96px
+
+.spinner-overlay
+  position fixed
+  top:0
+  bottom:0
+  left:0
+  right:0
+  background: #000
+  opacity 0.5
+  z-index: 10
+
+.spinner
+  background url('../assets/pie.svg')
+  position: absolute
+  display: block
+  left: 50%
+  margin-left: -72px
+  top: 50%
+  margin-top: -72px
+  width: 144px
+  height: 144px
+  z-index: 10
+  
+.hidden
+  display: none

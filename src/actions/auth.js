@@ -1,4 +1,4 @@
-import T from '../types';
+import {AUTH_TYPES} from '../types';
 
 export const signin = ({email, password}, history) => (dispatch, getState) => {
     const ROOT_URL = "http://localhost:3000";
@@ -16,11 +16,11 @@ export const signin = ({email, password}, history) => (dispatch, getState) => {
         .then(({token}) => {
             if (token) {
                 localStorage.setItem('token', token);
-                dispatch({type: T.AUTH_USER});
+                dispatch({type: AUTH_TYPES.AUTH_USER});
                 history.push('/profile');
             }
         })
-        .catch(error => dispatch({type: T.AUTH_ERROR, error: error.message}))
+        .catch(error => dispatch({type: AUTH_TYPES.AUTH_ERROR, error: error.message}))
 };
 
 export const signup = ({email, password}) => (dispatch, getState) => {
@@ -41,17 +41,17 @@ export const signup = ({email, password}) => (dispatch, getState) => {
 
             if (token) {
                 localStorage.setItem('token', token);
-                dispatch({type: T.AUTH_USER});
+                dispatch({type: AUTH_TYPES.AUTH_USER});
             } else if (error) {
-                dispatch({type: T.AUTH_ERROR, error: error})
+                dispatch({type: AUTH_TYPES.AUTH_ERROR, error: error})
             }
         })
-        .catch(error => dispatch({type: T.AUTH_ERROR, error: error.message}))
+        .catch(error => dispatch({type: AUTH_TYPES.AUTH_ERROR, error: error.message}))
 };
 
 export const signout = () => (dispatch, getState) => {
     // delete token from localStorage
     localStorage.removeItem('token');
     // dispatch an action
-    dispatch({type: T.UNAUTH_USER});
+    dispatch({type: AUTH_TYPES.UNAUTH_USER});
 };

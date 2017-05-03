@@ -20,7 +20,7 @@ module.exports = {
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'build'),
-        publicPath: "/"
+        publicPath: "/list"
     },
 
     devServer: {
@@ -41,12 +41,19 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader?modules',],
+                test: /\.svg$/,
+                use: {
+                    loader: 'svg-url-loader',
+                    options: {}
+                }
             },
             {
-                test: /\.(png|jpg|svg|ttf|eot|woff|woff2)$/,
-                use: 'file?name=[path][name].[ext]?[hash]'
+                test: /\.styl$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'stylus-loader'
+                ],
             }
         ],
     },

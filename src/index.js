@@ -5,7 +5,7 @@ import storeFactory from './store';
 // AppContainer is a necessary wrapper component for HMR
 import {AppContainer} from 'react-hot-loader';
 import App from './components/app';
-import T from './types';
+import {AUTH_TYPES} from './types';
 
 const store = storeFactory();
 // store.subscribe(saveState);
@@ -13,7 +13,7 @@ const store = storeFactory();
 const token = localStorage.getItem('token');
 
 if (token) {
-    store.dispatch({type: T.AUTH_USER});
+    store.dispatch({type: AUTH_TYPES.AUTH_USER});
 }
 
 window.store = store;
