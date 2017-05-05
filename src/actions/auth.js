@@ -1,7 +1,8 @@
 import {AUTH_TYPES} from '../types';
+import config from '../../config';
+const {serverURL} = config;
 
 export const signin = ({email, password}, history) => (dispatch, getState) => {
-    const ROOT_URL = "http://localhost:3000";
 
     let options = {
         method: "POST",
@@ -11,8 +12,14 @@ export const signin = ({email, password}, history) => (dispatch, getState) => {
         },
     };
 
-    fetch(`${ROOT_URL}/signin`, options)
-        .then(response => response.json())
+    fetch(`${serverURL}/signin`, options)
+        .then(response => {
+            if (response.status === 200) {
+                return response.json();
+            } else {
+                throw new Error(response.status);
+            }
+        })
         .then(({token}) => {
             if (token) {
                 localStorage.setItem('token', token);
@@ -24,7 +31,6 @@ export const signin = ({email, password}, history) => (dispatch, getState) => {
 };
 
 export const signup = ({email, password}) => (dispatch, getState) => {
-    const ROOT_URL = "http://localhost:3000";
 
     let options = {
         method: "POST",
@@ -34,10 +40,10 @@ export const signup = ({email, password}) => (dispatch, getState) => {
         },
     };
 
-    fetch(`${ROOT_URL}/signup`, options)
+    fetch(`${serverURL}/signup`, options)
         .then(response => response.json())
         .then(({token, error}) => {
-            console.log(token, error)
+            console.log(token, error);
 
             if (token) {
                 localStorage.setItem('token', token);
@@ -47,6 +53,11 @@ export const signup = ({email, password}) => (dispatch, getState) => {
             }
         })
         .catch(error => dispatch({type: AUTH_TYPES.AUTH_ERROR, error: error.message}))
+};
+
+export const facebookAuth = () => (dispatch, getState) => {
+    fetch(`${serverURL}/facebook`)
+        .then(response => window.open(response.url,'_blank'));
 };
 
 export const signout = () => (dispatch, getState) => {

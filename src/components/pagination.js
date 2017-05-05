@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {NavLink} from 'react-router-dom';
+import {withRouter} from 'react-router';
 
 
 class Pagination extends Component {
@@ -8,11 +10,11 @@ class Pagination extends Component {
 
         this.handlePrevious = this.handlePrevious.bind(this);
         this.createHref = this.createHref.bind(this);
-
     }
 
     isActive(current) {
-        return current === this.props.page ? 'active' : ''
+        const page = this.props.page;
+        return current ===  page ? 'active' : '';
     }
 
     handlePrevious(e) {
@@ -28,12 +30,12 @@ class Pagination extends Component {
 
 
     render() {
-        let page = this.props.page;
+        const page = this.props.page;
         const buttons = () => {
             if (page === 1) {
                 return [1, 2, 3].map(i => {
-                    return <li key={i} className={`page-item ${this.isActive(i)}`}><a className="page-link"
-                                                                                      href={this.createHref(i)}>{i}</a>
+                    return <li key={i} className={`page-item ${this.isActive(i)}`}>
+                        <NavLink className="page-link" to={this.createHref(i)}>{i}</NavLink>
                     </li>
                 });
             } else if (page > 1) {
@@ -41,22 +43,22 @@ class Pagination extends Component {
                     return <li
                         key={i}
                         className={`page-item ${this.isActive(i)}`}>
-                        <a className="page-link" href={this.createHref(i)}>{i}</a>
+                        <NavLink className="page-link" to={this.createHref(i)}>{i}</NavLink>
                     </li>
                 });
             }
         };
 
         return (
-            <nav>
+            <nav className="Pagination">
                 <ul className="pagination justify-content-center">
                     <li className={`page-item ${page === 1 ? 'disabled' : ''} `}>
-                        <a className="page-link" href={this.createHref(page - 1)} onClick={this.handlePrevious}
-                           tabIndex="-1">Previous</a>
+                        <NavLink className="page-link" to={this.createHref(page - 1)} onClick={this.handlePrevious}
+                           tabIndex="-1">Previous</NavLink>
                     </li>
                     {buttons()}
                     <li className="page-item">
-                        <a className="page-link" href={this.createHref(page + 1)}>Next</a>
+                        <NavLink className="page-link" to={this.createHref(page + 1)}>Next</NavLink>
                     </li>
                 </ul>
             </nav>
@@ -70,4 +72,4 @@ function mapStateToProps(state, props) {
         page: state.page
     }
 }
-export default connect(mapStateToProps)(Pagination)
+export default withRouter(connect(mapStateToProps)(Pagination));

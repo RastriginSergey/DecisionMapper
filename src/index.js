@@ -25,7 +25,7 @@ const render = () => {
                 <App />
             </Provider>
         </AppContainer>,
-        document.body
+        document.getElementById('root')
     );
 };
 

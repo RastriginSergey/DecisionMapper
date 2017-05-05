@@ -30,6 +30,8 @@ module.exports = {
         // match the output path
     },
 
+    watch: true,
+
     module: {
         rules: [
             {
@@ -50,6 +52,13 @@ module.exports = {
                     'style-loader',
                     'css-loader',
                     'stylus-loader'
+                ],
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    'style-loader',
+                    'css-loader'
                 ],
             }
         ],

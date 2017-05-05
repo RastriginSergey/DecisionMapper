@@ -1,15 +1,9 @@
 import React, {Component} from 'react';
+import Favorite from './favorite';
 import uuid from 'uuid';
 
 
 const Pokemon = (props) => {
-    const geRandomColor = () => {
-        const COLORS = ['default', 'primary', 'success', 'info', 'warning', 'danger'];
-        const randomNumber = Math.floor(Math.random() * 5);
-        return COLORS[randomNumber]
-
-    };
-
     return (
         <div className="Pokemon">
 
@@ -47,7 +41,7 @@ const Pokemon = (props) => {
 
                 {props.stats.map(item => {
                     return (
-                        <tr ket={uuid()}>
+                        <tr key={uuid()}>
                             <td>{item.stat.name[0].toUpperCase() + item.stat.name.substring(1)}</td>
                             <td>{item.base_stat}</td>
                         </tr>
@@ -56,6 +50,8 @@ const Pokemon = (props) => {
 
                 </tbody>
             </table>
+
+            <Favorite pokemon={props}/>
         </div>
     )
 };

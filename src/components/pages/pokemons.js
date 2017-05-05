@@ -1,63 +1,50 @@
 import {connect} from 'react-redux';
 import React, {Component} from 'react';
-import {fetchPokemons} from '../../actions/pokemons';
-import Pokemon from '../pokemon';
 import Pagination from '../pagination'
+import {fetchPokemons, fetchFavorites} from '../../actions/pokemons';
+import {withRouter} from 'react-router';
+import PokemonList from '../pokemon-list';
+import PokemonNameFilter from '../pokemon-name-filter';
+import PokemonTypeFilter from '../pokemon-type-filter'
+
 
 class Pokemons extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            pokemons: [],
-            searchText: '',
-            tags: ''
-        };
+        this.updatePage = this.updatePage.bind(this);
+    }
 
-        this.onInputChange = this.onInputChange.bind(this);
+    updatePage(page) {
+        if (page) {
+            this.props.fetchPokemons(page);
+        }
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({pokemons: nextProps.pokemons.list})
-    }
+        const page = parseInt(nextProps.match.params.page);
+        this.updatePage(page);
 
-    onInputChange(e) {
-        this.setState({searchText: e.target.value});
     }
 
     componentWillMount() {
-        const page = parseInt(this.props.match.params.page) || 1;
-        this.props.fetchPokemons(page);
+        this.props.fetchFavorites();
+        const page = parseInt(this.props.match.params.page);
+        this.updatePage(page);
     }
 
+
     render() {
-        const pokemons = this.state.pokemons.filter(pokemon => {
-            const pattern = new RegExp(`^${this.state.searchText.toLowerCase()}`);
-            return pattern.test(pokemon.name);
-        }).map(pokemon => {
-            return <Pokemon {...pokemon} key={pokemon.name}/>
-        });
-
-
         return (
-            <div className="Pokemons">
-                    <input type="text" className="Pokemons-filter form-control"
-                           placeholder="Filter..."
-                           autoComplete="off" onChange={this.onInputChange}/>
-
-
-                <div className="Pokemons-container">{pokemons}</div>
-
+            <div>
+                <div className="filters-wrapper">
+                    <PokemonNameFilter/>
+                    <PokemonTypeFilter/>
+                </div>
+                <PokemonList/>
                 <Pagination/>
             </div>
         )
     }
 }
 
-function mapStateToProps(state, props) {
-    return {
-        pokemons: state.pokemons
-    }
-}
-
-
-export default connect(mapStateToProps, {fetchPokemons})(Pokemons);
+export default withRouter(connect(null, {fetchPokemons, fetchFavorites})(Pokemons));

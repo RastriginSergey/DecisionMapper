@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import Profile from './pages/profile';
+import {HashRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
+import Favorites from './pages/favorites';
 import Signin from './auth/signin';
 import Signup from './auth/signup';
 import Signout from './auth/signout';
@@ -19,7 +19,7 @@ class App extends Component {
         const renderLinks = () => {
             if (this.props.auth.isAuthenticated) {
                 return [
-                    <NavLink key={uuid()} className="nav-link" to="/profile">Profile</NavLink>,
+                    <NavLink key={uuid()} className="nav-link" to="/favorites">Favorites</NavLink>,
                     <NavLink key={uuid()} className="nav-link" to="/signout">Sing Out</NavLink>
                 ];
             } else {
@@ -34,21 +34,22 @@ class App extends Component {
             <Router>
                 <div className="grid">
                     <header>
-                        <NavLink key={uuid()} to="/list" className="nav-link">Pokemons</NavLink>
+                        <NavLink key={uuid()} to="/list/1" className="nav-link">Pokemons</NavLink>
                         {renderLinks()}
                     </header>
 
                     <Spinner/>
 
-                    <div className="main">
+                    <div className="main container-fluid">
                         <Switch>
-                            <Route path="/list/:page?" component={Pokemons}/>
-                            <Route path="/profile" component={requireAuth(Profile)}/>
+                            <Route path="/list/:page" component={Pokemons}/>
+                            <Route path="/favorites" component={requireAuth(Favorites)}/>
                             <Route path="/signin" component={Signin}/>
                             <Route path="/signup" component={Signup}/>
                             <Route path="/signout" component={Signout}/>
-
+                            <Redirect from='/' to='/list/1'/>
                             <Route component={NotFound}/>
+
                         </Switch>
                     </div>
 
