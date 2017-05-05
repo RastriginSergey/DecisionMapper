@@ -24,7 +24,7 @@ export const signin = ({email, password}, history) => (dispatch, getState) => {
             if (token) {
                 localStorage.setItem('token', token);
                 dispatch({type: AUTH_TYPES.AUTH_USER});
-                history.push('/profile');
+                history.push('/favorite');
             }
         })
         .catch(error => dispatch({type: AUTH_TYPES.AUTH_ERROR, error: error.message}))
@@ -55,9 +55,26 @@ export const signup = ({email, password}) => (dispatch, getState) => {
         .catch(error => dispatch({type: AUTH_TYPES.AUTH_ERROR, error: error.message}))
 };
 
-export const facebookAuth = () => (dispatch, getState) => {
-    fetch(`${serverURL}/facebook`)
-        .then(response => window.open(response.url,'_blank'));
+export const facebookAuth = (fbResponse, history) => (dispatch, getState) => {
+    const {accessToken} = fbResponse.authResponse;
+    fetch(`${serverURL}/facebook?access_token=${accessToken}`, {
+        method: "GET"
+    })
+        .then(response => {
+            if (response.status === 200) {
+                return response.json()
+            } else {
+                throw new Error("Invalid facebook auth");
+            }
+        })
+        .then(({token}) => {
+            if (token) {
+                localStorage.setItem('token', token);
+                dispatch({type: AUTH_TYPES.AUTH_USER});
+                history.push('/favorites')
+            }
+        })
+        .catch(error => dispatch({type: AUTH_TYPES.AUTH_ERROR, error: error.message}));
 };
 
 export const signout = () => (dispatch, getState) => {

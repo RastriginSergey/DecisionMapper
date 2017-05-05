@@ -13,10 +13,14 @@ class FavoritesList extends Component {
     }
 
     render() {
+        const pokemons = this.props.favorites.map(pokemon => {
+            return <Pokemon {...pokemon} key={pokemon.name}/>
+        });
+
+        const list = pokemons.length ? pokemons : <h1>Your list is empty!</h1>
+
         return (
-            <div className="Pokemons-container">{this.props.favorites.map(pokemon => {
-                return <Pokemon {...pokemon} key={pokemon.name}/>
-            })}</div>
+            <div className="Pokemons-container">{list}</div>
         )
     }
 

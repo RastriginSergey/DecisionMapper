@@ -2,7 +2,7 @@ import {POKEMON_TYPES} from '../types';
 import config from '../../config';
 
 
-export const fetchPokemons = (page = 1, limit = 2, offset = 0) => (dispatch, getState) => {
+export const fetchPokemons = (page = 1, limit = 9, offset = 0) => (dispatch, getState) => {
     dispatch({type: POKEMON_TYPES.CHANGE_PAGE, page});
     dispatch({type: POKEMON_TYPES.START_FETCHING});
 

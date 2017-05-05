@@ -17,10 +17,9 @@ class Signin extends Component {
 
     handleFacebook(e) {
         e.preventDefault();
-        FB.getLoginStatus(function(response) {
-            statusChangeCallback(response);
+        FB.login((response) => {
+            this.props.facebookAuth(response, this.props.history);
         });
-        // this.props.facebookAuth();
     }
 
     render() {
